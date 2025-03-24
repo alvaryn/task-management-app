@@ -58,7 +58,9 @@ return (
           style={{
             flex: 1,
             textDecoration: task.status === 'done' ? 'line-through' : 'none',
-            color: task.status === 'done' ? '#888' : '#000',
+            color: task.status === 'done' ? '#888' : 
+                   task.priority === 'high' ? '#ff4444' :
+                   task.priority === 'medium' ? '#ffaa00' : '#00aa00'
           }}
         >
           {task.title}
