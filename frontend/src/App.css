@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.task-completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-pending {
+  font-weight: bold;
+}
