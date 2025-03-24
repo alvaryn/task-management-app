@@ -3,11 +3,12 @@ import { createTask } from '../api/tasks';
 
 const TaskForm = ({ onTaskCreated }) => {
   const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState("medium"); // Default state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newTask = await createTask({ title });
+      const newTask = await createTask({ title, priority });
       onTaskCreated(newTask);
       setTitle('');
     } catch (error) {
@@ -23,6 +24,15 @@ const TaskForm = ({ onTaskCreated }) => {
         placeholder="Task title"
         required
       />
+      <select 
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+        className="priority-select"
+      >
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>      
       <button type="submit">Add Task</button>
     </form>
   );
