@@ -1,54 +1,366 @@
+/* Global Reset and Theme */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --high-priority-color: #ff4444;
+  --medium-priority-color: #ffaa00;
+  --low-priority-color: #00aa00;
+  --urgent-color: #ff6b35;
+  --font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  background-color: var(--light-color);
+}
+
+/* App Container */
 .App {
   text-align: center;
+}
+
+/* Header Styling */
+.App-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+  animation: App-logo-spin infinite 20s linear;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.task-completed {
+/* Task List */
+.task-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.task-item {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.task-item:hover {
+  transform: scale(1.02);
+}
+
+.task-title {
+  flex-grow: 1;
+  font-size: 1.1rem;
+}
+
+.task-title.done {
   text-decoration: line-through;
-  color: #888;
+  color: var(--secondary-color);
 }
 
-.task-pending {
+/* Priority-based Colors */
+.task-item.high {
+  background-color: rgba(255, 68, 68, 0.1);
+  border-left: 5px solid var(--high-priority-color);
+}
+
+.task-item.medium {
+  background-color: rgba(255, 170, 0, 0.1);
+  border-left: 5px solid var(--medium-priority-color);
+}
+
+.task-item.low {
+  background-color: rgba(0, 170, 0, 0.1);
+  border-left: 5px solid var(--low-priority-color);
+}
+
+/* Date Status */
+.task-date {
+  margin-left: 20px;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+.task-date.urgent {
+  color: var(--urgent-color);
   font-weight: bold;
 }
 
-.priority-select {
-  margin-left: 10px;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.task-date.past-due {
+  color: var(--danger-color);
 }
+
+.task-date.no-date {
+  font-style: italic;
+  color: var(--secondary-color);
+}
+
+/* Buttons */
+button.delete-btn {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* ===================== */
+/* Trash Icon Styles */
+/* ===================== */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.trash-icon {
+  color: var(--danger-color);
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.delete-btn:hover .trash-icon {
+  transform: scale(1.1);
+}
+
+/* Dark mode adjustments */
+.dark-mode .delete-btn:hover {
+  background: rgba(220, 53, 69, 0.2);
+}
+
+.dark-mode .trash-icon {
+  color: #ff6b6b;
+}
+/* ===================== */
+/* Task Item Enhancements */
+/* ===================== */
+.task-item {
+  position: relative; /* For absolute positioning of delete button if needed */
+  padding-right: 50px; /* Make space for the trash icon */
+}
+
+/* Optional: Move delete button to right with absolute positioning */
+/*
+.task-item .delete-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+*/
+
+/* ===================== */
+/* Animation Enhancements */
+/* ===================== */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-20px); }
+}
+
+.task-item.deleting {
+  animation: fadeOut 0.3s forwards;
+}
+
+/* ===================== */
+/* Priority-Specific Trash Icons */
+/* ===================== */
+.task-item.high .trash-icon {
+  color: var(--high-priority-color);
+}
+
+.task-item.medium .trash-icon {
+  color: var(--medium-priority-color);
+}
+
+.task-item.low .trash-icon {
+  color: var(--low-priority-color);
+}
+
+/* ===================== */
+/* Responsive Adjustments */
+/* ===================== */
+@media (max-width: 600px) {
+  .delete-btn {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+  
+  /* If using absolute positioning */
+  /*
+  .task-item .delete-btn {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+  */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-date {
+    margin-top: 10px;
+  }
+} 
+/* Add these to your existing App.css */
+
+/* Base styles */
+.app {
+  min-height: 100vh;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Light Mode (default) */
+.app {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.app .task-form,
+.app .task-list {
+  background-color: white;
+  color: #333;
+}
+
+/* Dark Mode */
+.app.dark-mode {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.app.dark-mode .task-form,
+.app.dark-mode .task-list {
+  background-color: #2d2d2d;
+  color: #f0f0f0;
+}
+
+.app.dark-mode input,
+.app.dark-mode select,
+.app.dark-mode button {
+  background-color: #333;
+  color: white;
+  border-color: #444;
+}
+
+/* Mode toggle button */
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+header {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  height: 50px; /* Adjust as needed */
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.task-title {
+  flex: 1; 
+  font-size: 16px;
+}
+
+.task-date {
+  color: #666;
+  margin: 0 16px; /* Adds spacing between date and icons */
+  font-size: 14px;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 50%;
+}
+
+.delete-btn {
+  color: #d9534f;
+}
+
+.edit-btn {
+  color: #0275d8;
+}
+
+/* Priority Colors */
+.high { background-color: #f8d7da; }
+.medium { background-color: #fff3cd; }
+.low { background-color: #d4edda; }
+
+/* Status Colors */
+.done { text-decoration: line-through; color: #aaa; }
+.todo { color: #333; }

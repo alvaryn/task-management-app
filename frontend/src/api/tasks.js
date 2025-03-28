@@ -27,6 +27,18 @@ export const deleteTask = async (id) => {
   return response.json(); // Returns { message: "Task deleted successfully" }
 };
 
+// Update a task
+export const updateTask = async (id, updatedData) => {
+  const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedData),
+  });
+  if (!response.ok) throw new Error("Failed to update task");
+  return response.json();
+};
+
+// Update task status
 export const updateTaskStatus = async (id, status) => {
   const response = await fetch(`${API_BASE_URL}/tasks/${id}/status`, {
     method: "PATCH",
